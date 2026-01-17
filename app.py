@@ -30,7 +30,8 @@ while True:
     print('\n================ MAIN MENU ================')
     print('1 - Handle Duplicates (General)')
     print('2 - Handle Missing Values (General)')
-    print('3 - Save Data and Exit')
+    print('3 - Handle Outliers (Replace with Mean)') # الميزة الجديدة
+    print('4 - Save Data and Exit')
     
     # Get user choice as a string to avoid input errors
     choice = input('\nSelect an option: ')
@@ -42,18 +43,13 @@ while True:
         print('b - Delete duplicates based on a specific column')
         sub_choice = input('Choose (a) or (b): ').lower()
         
-        # Option to delete exact row matches
         if sub_choice == 'a':
             data.drop_duplicates(inplace=True)
             print('All completely duplicated rows have been removed.')
             
-        # Option to delete duplicates based on a specific column (e.g., ID)
         elif sub_choice == 'b':
-            # Display available columns for the user to choose from
             print("Available columns:", list(data.columns))
             col_name = input('Enter the column name to check for duplicates: ')
-            
-            # Check if the column exists in the data
             if col_name in data.columns:
                 data.drop_duplicates(subset=[col_name], inplace=True)
                 print(f'Duplicates removed based on column: {col_name}')
@@ -62,7 +58,6 @@ while True:
 
     # --- Start of Missing Values Handling ---
     elif choice == '2':
-        # Calculate and display the count of missing values per column
         print('\nCurrent Missing Values Statistics:')
         print(data.isnull().sum())
         print('\n--- Missing Values Options ---')
@@ -71,39 +66,58 @@ while True:
         print('c - Replace empty cells with zero (0)')
         sub_choice = input('Choose (a), (b), or (c): ').lower()
 
-        # Drop row if it contains at least one null value
         if sub_choice == 'a':
             data.dropna(how='any', inplace=True)
             print('All rows containing empty cells have been removed.')
             
-        # Drop row only if all cells in that row are empty
         elif sub_choice == 'b':
             data.dropna(how='all', inplace=True)
             print('Completely empty rows have been removed.')
             
-        # Fill all null values with 0
         elif sub_choice == 'c':
             data.fillna(0, inplace=True)
             print('All empty cells have been replaced with 0.')
 
-    # --- Start of Saving and Exiting ---
+    # --- Start of Outlier Handling (The New Feature) ---
     elif choice == '3':
-        # Ask for the new filename
+        print("\nAvailable columns:", list(data.columns))
+        col_name = input('Enter the numeric column name to fix outliers: ')
+        
+        # Check if the column exists
+        if col_name in data.columns:
+            try:
+                # Ensure the column is numeric
+                data[col_name] = pd.to_numeric(data[col_name])
+                
+                # Calculate the Mean of the column
+                column_mean = data[col_name].mean()
+                print(f"Current average for {col_name} is: {column_mean:.2f}")
+
+                # Ask user for logical boundaries
+                low_limit = float(input('Enter the minimum logical value: '))
+                high_limit = float(input('Enter the maximum logical value: '))
+
+                # Logic: Replace any value outside limits with the Mean
+                data.loc[(data[col_name] < low_limit) | (data[col_name] > high_limit), col_name] = column_mean
+                
+                print(f'Done! Outliers in "{col_name}" have been replaced with the mean value ({column_mean:.2f}).')
+            except Exception as e:
+                print("Error: Please make sure the column contains only numbers.")
+        else:
+            print("Error: Column name not found.")
+
+    # --- Start of Saving and Exiting ---
+    elif choice == '4':
         save_name = input('\nEnter the new filename to save (e.g., output.csv): ')
-        # Try to save the file
         try:
-            # Export data to a new CSV without the index column
             data.to_csv(save_name, index=False)
             print(f'File saved successfully as: {save_name}')
-            # Terminate the program
             break
-        # In case the file is open elsewhere or permission is denied
         except Exception as e:
             print('Error: Could not save file. Ensure it is not open in another program.')
 
-    # Handle undefined inputs in the main menu
     else:
-        print('Invalid selection, please choose 1, 2, or 3.')
+        print('Invalid selection, please choose 1, 2, 3, or 4.')
 
 # Final closing message
 print('\nTool closed. Thank you, Razi!')
