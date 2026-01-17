@@ -1,4 +1,4 @@
-## \# Data-Cleaner-Pro 🛠️ \| أداة تسريع تنظيف البيانات
+# Data-Cleaner-Pro 🛠️ | أداة تسريع تنظيف البيانات
 
 ## 🟢 عربي
 
@@ -20,6 +20,10 @@
 ✅ **إدارة القيم المفقودة** - حذف الصفوف التي تحتوي على أي قيمة فارغة\
 - حذف الصفوف الفارغة تمامًا فقط\
 - تعويض القيم الفارغة بصفر (0)
+
+✅ **التعامل مع القيم الشاذة** - التعرف على القيم التي تختلف بشكل كبير عن باقي القيم في مجموعة البيانات.\
+- يمكن أن تؤثر القيم الشاذة على نتائج التحليل، لذا من المهم التعامل معها بشكل صحيح.\
+- خيارات التعامل تشمل إزالة القيم الشاذة أو استبدالها بقيم متوسطة.
 
 ✅ **واجهة تفاعلية** - واجهة مبسطة عبر سطر الأوامر\
 - لا تحتاج لخبرة برمجية
@@ -49,7 +53,7 @@ python data_cleaner.py
 
 ### 💡 لماذا هذه الأداة؟
 
-كما يقول **Sultan (Razi)**: \> "محلل البيانات يقضي من 60% إلى 80% من
+كما يقول **Sultan (Razi)**: > "محلل البيانات يقضي من 60% إلى 80% من
 وقته في تنظيف البيانات.\
 هذه الأداة صُممت لتختصر هذا الوقت، لتتمكن من التركيز على استخراج الرؤى
 وصناعة القرار."
@@ -101,6 +105,10 @@ value\
 - Remove completely empty rows only\
 - Fill missing values with zero (0)
 
+✅ **Handling Outliers** - Identifying values that differ significantly from other values in the dataset.\
+- Outliers can affect analysis results, so it's important to handle them appropriately.\
+- Options for handling include removing outliers or replacing them with average values.
+
 ✅ **Interactive CLI** - Simple and user-friendly command-line
 interface\
 - No advanced programming knowledge required
@@ -130,7 +138,7 @@ python data_cleaner.py
 
 ### 💡 Why This Tool?
 
-As **Sultan (Razi)** says: \> "A data analyst spends 60--80% of their
+As **Sultan (Razi)** says: > "A data analyst spends 60--80% of their
 time cleaning data.\
 This tool was built to reduce that time so you can focus on insights and
 decision-making."
@@ -159,3 +167,6 @@ If you like the tool or have feature suggestions (such as column
 renaming), feel free to reach out.
 
 Razi (Sultan) -- Data Analysis Enthusiast 🚀
+
+------------------------------------------------------------------------
+
